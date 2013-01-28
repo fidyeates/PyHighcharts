@@ -2,6 +2,7 @@
 
 A convenient wrapper for Highchart generation procedurally or on the command-line to browser output.
 
+For documentation on highcharts visit: <a href='http://api.highcharts.com/highcharts'>
 
 ## General Usage
 
