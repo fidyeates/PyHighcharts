@@ -8,7 +8,8 @@ For documentation on highcharts visit: <a href="http://api.highcharts.com/highch
 
 Using Highcharts is so simple: You can even doing it on the command line!
 
-<pre><code>H = Highchart(width='500 px',height='500 px',renderTo='container')
+<pre><code>from PyHighcharts import Highchart
+H = Highchart(width='500 px',height='500 px',renderTo='container')
 data = [1,2,3,4,5,6,7,8,9,10]
 H.add_data_set(data,type='line',name='test_data')
 H.show()</code></pre>
