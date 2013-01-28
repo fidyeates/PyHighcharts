@@ -19,17 +19,17 @@ This Highcharts codebase was primarily developed for use within templating: And 
 
 <pre>
 <code> 
-	<html>
-	<head>
-	{ Highcharts.need() }
-	</head>
-	<body>
-	<div id='container'></div>
-	<script>
-	{ test_highchart_content }
-	</script>
-	</body>
-	</html>
+\<html>
+\<head>
+{ Highcharts.need() }
+\</head>
+\<body>
+\<div id='container'></div>
+\<script>
+{ test_highchart_content }
+\</script>
+\</body>
+\</html>
 </code>
 </pre>
 
