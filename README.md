@@ -53,4 +53,4 @@ All you need to do is pass in the highcharts pre-generated with the generate() f
 
 There is a few examples within /highcharts/examples.py to try out
 
-<img src="https://raw.github.com/fidyeates/PyHighcharts/blob/master/images/chart.png">
+<img src="https://raw.github.com/fidyeates/PyHighcharts/master/images/chart.png">
