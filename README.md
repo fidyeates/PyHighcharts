@@ -17,21 +17,17 @@ This show() function generates a temporary HTML file and opens up the chart for 
 
 This Highcharts codebase was primarily developed for use within templating: And that is easy to do also!
 
-<pre>
-<code> 
-\<html>
-\<head>
-{ Highcharts.need() }
-\</head>
-\<body>
-\<div id='container'></div>
-\<script>
-{ test_highchart_content }
-\</script>
-\</body>
-\</html>
-</code>
-</pre>
+	<html>
+	<head>
+		{ Highcharts.need() }
+	</head>
+	<body>
+	<div id='container'></div>
+	<script>
+		{ test_highchart_content }
+	</script>
+	</body>
+	</html>
 
 All you need to do is pass in the highcharts pre-generated with the generate() function to your templates within some script tags (And don't forget to correctly name the id's of the divs!)
 
