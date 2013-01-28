@@ -4,6 +4,8 @@ A convenient wrapper for Highchart generation procedurally or on the command-lin
 
 For documentation on highcharts visit: <a href="http://api.highcharts.com/highcharts" target="_blank">Highcharts API</a>
 
+And remember Highcharts is only free for non-commercial use: Pop over to <a href="http://shop.highsoft.com/highcharts.html" target="_blank">Highcharts Licensing</a> for more info!
+
 ## General Usage
 
 Using Highcharts is so simple: You can even doing it on the command line!
