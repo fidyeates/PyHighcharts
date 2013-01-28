@@ -268,34 +268,3 @@ class Highchart(object):
 	def need():
 		return DEFAULT_HEADERS
 
-
-if __name__ == '__main__':
-	test_config = {
-        "chart": {
-            "plotBackgroundColor": 'none',
-            "backgroundColor": 'none',
-        },
-        "xAxis": {
-            "gridLineWidth": 0,
-            "lineWidth": 0,
-            "tickLength": 0,
-
-        },
-        "yAxis": {
-            "gridLineWidth": 0,
-            "title": {
-            	"text": "Test Data"
-            },
-        },
-        "exporting": {
-        	'enabled': False
-        }
-    }
-	H = Highchart(width=500,height=500,renderTo="container")
-	H.title("Test Highchart")
-	H.set_start_date(time.time())
-	H.set_interval(1000 * 60 * 60)
-	H.set_options(test_config)
-	H.add_data_set([1,2,3,4,5,6],index=2)
-	H.add_data_set([6,7,8,9,10],index=1)
-	H.show()
