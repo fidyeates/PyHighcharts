@@ -48,3 +48,9 @@ All you need to do is pass in the highcharts pre-generated with the generate() f
 - ColumnRange
 - Pie
 - Series
+
+## Examples
+
+There is a few examples within /highcharts/examples.py to try out
+
+![](https://github.com/fidyeates/PyHighcharts/blob/master/images/chart.png)
