@@ -53,4 +53,4 @@ All you need to do is pass in the highcharts pre-generated with the generate() f
 
 There is a few examples within /highcharts/examples.py to try out
 
-[{% https://github.com/fidyeates/PyHighcharts/blob/master/images/chart.png %}]
+![Example]{https://github.com/fidyeates/PyHighcharts/blob/master/images/chart.png}
