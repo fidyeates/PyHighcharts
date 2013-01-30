@@ -55,7 +55,7 @@ class ChartOptions(BaseOptions):
 		"className": str,
 		"defaultSeriesType": str,
 		"events": NotImplemented,
-		"height": int,
+		"height": (int,str),
 		"ignoreHiddenSeries": bool,
 		"inverted": bool,
 		"margin": list,
@@ -81,7 +81,7 @@ class ChartOptions(BaseOptions):
 		"spacingTop": int,
 		"style": NotImplemented, # StyleObject
 		"type": str,
-		"width": int,
+		"width": (int,str),
 		"zoomType": str,
 	}
 
@@ -323,7 +323,7 @@ class xAxisOptions(BaseOptions):
 		"linkedTo": int,
 		"max": int,
 		"maxPadding": float,
-		"maxZoom": NotImplemented,
+		"maxZoom": int,
 		"min": int,
 		"minPadding": float,
 		"minRange": int,
