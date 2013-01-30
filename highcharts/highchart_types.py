@@ -33,7 +33,7 @@ PLOT_OPTION_ALLOWED_ARGS = {
 		"fillOpacity": float,
 		"lineColor": str,
 		"lineWidth": int,
-		"marker": NotImplemented,
+		"marker": dict,
 		"pointInterval": int,
 		"pointPlacement": str,
 		"pointStart": (int,str),
