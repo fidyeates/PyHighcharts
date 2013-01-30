@@ -83,7 +83,13 @@ class Highchart(object):
 		def update_tmp(tmp,k,v,type=None,tab_depth=1):
 			if k not in FORMAT_SPECIAL_CASES:
 				# Value Checking
-				if isinstance(v,bool):
+				if isinstance(v,dict):
+					tmp += "\t%s: {\n" % k
+					for sk, sv in v.items():
+						tmp = update_tmp(tmp,sk, sv, tab_depth=3)
+					tmp += "\t\t" + "},\n"
+					return tmp
+				elif isinstance(v,bool):
 					# Convert Bool to js equiv.
 					bool_mapping = {
 						False: 'false',
@@ -93,7 +99,6 @@ class Highchart(object):
 				elif isinstance(v,str):
 					# Need to keep string quotes
 					v = "\'" + v + "\'"
-
 				tmp+="\t"*tab_depth + "%s: %s,\n" % (k, v)
 			else:
 				if FORMAT_SPECIAL_CASES[k] == "skip_quotes":
@@ -181,7 +186,7 @@ class Highchart(object):
 
 	def set_start_date(self,date):
 		# Process Date and make sure chart is in Datetime mode, Need to set defaults
-		if isinstance(date,float):
+		if isinstance(date,(int,float)):
 			date = datetime.datetime.fromtimestamp(date)
 		elif not isinstance(date,datetime):	raise HighchartError("Start Date Format Currently Not Supported: %s" % date)
 		date_dict = {
