@@ -69,7 +69,7 @@ PLOT_OPTION_ALLOWED_ARGS = {
 		"fillOpacity": float,		
 		"lineColor": str,
 		"lineWidth": int,
-		"marker": NotImplemented,
+		"marker": dict,
 		"pointInterval": int,
 		"pointPlacement": str,
 		"pointStart": (int,str),
@@ -319,14 +319,3 @@ class Series(object):
 			else:
 				if not supress_errors: raise OptionTypeError("Option: %s Not Allowed For Data Series: %s" % (k, series_type))
 
-
-
-
-
-
-
-
-
-
-if __name__ == '__main__':
-	Series(series_type="pie",startAngle=45).__display_options__()
