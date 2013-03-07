@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """ PyHighcharts chart.py
 A Wrapper around the Highcharts JS objects to dynamically generate
 browser enabled charts on the fly.
@@ -27,6 +28,7 @@ DEFAULT_HEADERS = """<script type='text/javascript' src=\
 # Static Vars
 BASE_TEMPLATE = "/development/PyHighcharts/templates/base.tmp"
 SHOW_TEMPLATE = "/development/PyHighcharts/templates/show_temp.tmp"
+GECKO_TEMPLATE = "/development/PyHighcharts/templates/gecko_temp.tmp"
 
 DEFAULT_POINT_INTERVAL = 86400000
 
@@ -89,17 +91,14 @@ def series_formatter(data):
 
 def chart_formatter(option_type, data):
     """ Formatter Function """
-
     # Special Cases
     special_cases = {
         "colors": color_formatter,
         "series": series_formatter,
     }
     tmp = ""
-
     if option_type in special_cases:
         tmp += special_cases[option_type](data)
-
     else:
         for key, val in data.items():
             if isinstance(val, dict):
@@ -107,16 +106,13 @@ def chart_formatter(option_type, data):
                 for subkey, subval in val.items():
                     tmp = update_template(tmp, subkey, subval, tab_depth=3)
                 tmp += "\t\t" + "},\n"
-
             elif isinstance(val, SeriesOptions):
                 tmp += "\t%s: {\n" % key
                 for subkey, subval in val.__dict__.items():
                     tmp = update_template(tmp, subkey, subval, tab_depth=3)
                 tmp += "\t\t" + "},\n"
-
             else:
                 tmp = update_template(tmp, key, val)
-
     return tmp
 
 
@@ -164,16 +160,18 @@ class Highchart(object):
         # Some Extra Vals to store: 
         self.data_set_count = 0
 
-    def __render__(self, ret=False):
-        with open(BASE_TEMPLATE,"rb") as template_file:
+
+    def __render__(self, ret=False, template="base"):
+        if template == "base":
+            TEMPLATE = BASE_TEMPLATE
+        elif template == "gecko":
+            TEMPLATE = GECKO_TEMPLATE
+        with open(TEMPLATE,"rb") as template_file:
             tmp = template_file.read()
         rendered = tmp.format(**self.__export_options__())
         if ret: 
             return rendered
         print rendered
-
-
-    
 
 
     def __export_options__(self):
@@ -259,10 +257,8 @@ class Highchart(object):
             series_type, series_options = hold_item
             series_options.process_kwargs({'pointInterval':interval},
                 series_type=series_type)
-
         if not self.start_date_set:
             print "Set The Start Date With .set_start_date(date)"
-
 
 
     def add_data_set(self, data, series_type="line", name=None, **kwargs):
@@ -271,7 +267,6 @@ class Highchart(object):
         if not name: 
             name = "Series %d" % self.data_set_count
         kwargs.update({'name':name})
-
         if self.hold_point_start: 
             kwargs.update({"pointStart":self.hold_point_start})
             self.hold_point_start = None
