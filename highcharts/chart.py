@@ -16,8 +16,10 @@ from PyHighcharts.highcharts.options import ChartOptions, \
 from PyHighcharts.highcharts.highchart_types import Series, SeriesOptions
 from PyHighcharts.highcharts.common import Formatter
 
+
+
 # Stdlib Imports
-import datetime, random, webbrowser, os
+import datetime, random, webbrowser, os, inspect
 
 TMP_DIR = "/tmp/highcharts_tmp/"
 DEFAULT_HEADERS = """<script type='text/javascript' src=\
@@ -25,10 +27,11 @@ DEFAULT_HEADERS = """<script type='text/javascript' src=\
 </script>\n<script src="http://code.highcharts.com/highcharts.js"></script>\n \
 <script src="http://code.highcharts.com/modules/exporting.js"></script>"""
 
+ROOT_PATH = os.path.dirname(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))))
 # Static Vars
-BASE_TEMPLATE = "/development/PyHighcharts/templates/base.tmp"
-SHOW_TEMPLATE = "/development/PyHighcharts/templates/show_temp.tmp"
-GECKO_TEMPLATE = "/development/PyHighcharts/templates/gecko_temp.tmp"
+BASE_TEMPLATE = ROOT_PATH + "/templates/base.tmp"
+SHOW_TEMPLATE = ROOT_PATH + "/templates/show_temp.tmp"
+GECKO_TEMPLATE = ROOT_PATH + "/templates/gecko_temp.tmp"
 
 DEFAULT_POINT_INTERVAL = 86400000
 
