@@ -1,5 +1,7 @@
-try:	import json
-except ImportError:	import simplejson as json
+try:	
+	import ujson as json
+except ImportError:	
+	import simplejson as json
 
 
 
@@ -124,7 +126,7 @@ PLOT_OPTION_ALLOWED_ARGS = {
 		"borderWidth": int,
 		"colorByPoint": bool,
 		"cropThreshold": int,
-		"groupPadding": float,
+		"groupPadding": (float, int),
 		"grouping": bool,
 		"lineColor": str,
 		"lineWidth": int,
@@ -164,6 +166,28 @@ PLOT_OPTION_ALLOWED_ARGS = {
 	},
 	"gauge": {
 		"dial": NotImplemented,
+		"animation": bool,
+		"color": NotImplemented,
+		"cursor": NotImplemented,
+		"dataLabels": NotImplemented,
+		"dial": NotImplemented,
+		"enableMouseTracking": bool,
+		"events": NotImplemented,
+		"id": NotImplemented,
+		"linkedTo": NotImplemented,
+		"negativeColor": NotImplemented,
+		"pivot": NotImplemented,
+		"point": NotImplemented,
+		"selected": bool,
+		"showCheckbox": bool,
+		"showInLegend": NotImplemented,
+		"states": NotImplemented,
+		"stickyTracking": bool,
+		"threshold": int,
+		"tooltip": NotImplemented,
+		"visible": bool,
+		"wrap": bool,
+		"zIndex": NotImplemented,
 	},
 	"line": {
 		"allowPointSelect": bool,

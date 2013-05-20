@@ -8,7 +8,7 @@ And remember Highcharts is only free for non-commercial use: Pop over to <a href
 
 ## General Usage
 
-Using Highcharts is so simple: You can even doing it on the command line!
+Using Highcharts is so simple: You can even do it on the command line!
 
 <pre><code>from PyHighcharts import Highchart
 H = Highchart(width='500 px',height='500 px',renderTo='container')

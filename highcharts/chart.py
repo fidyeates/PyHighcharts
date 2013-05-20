@@ -285,20 +285,24 @@ class Highchart(object):
         self.options["series"].data.append(series_data)
 
 
-    def set_options(self, options):
+    def set_options(self, options, force_options=False):
         """ Set Plot Options """
-        new_options = {}
-        for key, option_data in options.items():
-            data = {}
-            for key2, val in option_data.items():
-                if isinstance(val, dict):
-                    for key3, val2 in val.items():    
-                        data.update({key2+"_"+key3:val2})
-                else:   
-                    data.update({key2:val})
-            new_options.update({key:data})
-        for key, val in new_options.items():
-            self.options[key].update_dict(**val)
+        if force_options:
+            for k, v in options.items():
+                self.options.update({k:v})
+        else:
+            new_options = {}
+            for key, option_data in options.items():
+                data = {}
+                for key2, val in option_data.items():
+                    if isinstance(val, dict):
+                        for key3, val2 in val.items():    
+                            data.update({key2+"_"+key3:val2})
+                    else:   
+                        data.update({key2:val})
+                new_options.update({key:data})
+            for key, val in new_options.items():
+                self.options[key].update_dict(**val)
 
 
     def show(self):

@@ -66,9 +66,8 @@ def multiple_example():
         name="Balance",
         index=1)
     chart.set_options(EXAMPLE_CONFIG)
-    chart.colors(["#99CCFF", "#FFFF66"])
     chart.show()
 
 
 if __name__ == '__main__':
-    spline_example()
+    multiple_example()

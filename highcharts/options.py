@@ -1,5 +1,7 @@
-try: import json
-except ImportError: import simplejson as json
+try: 
+    import ujson as json
+except ImportError: 
+    import simplejson as json
 
 from highchart_types import OptionTypeError, Series, SeriesOptions
 from common import Formatter
@@ -101,7 +103,19 @@ class ChartOptions(BaseOptions):
 class ColorsOptions(BaseOptions):
     """ Special Case, this is simply just an array of colours """
     def __init__(self):
-        self.__dict__.update({"colors":[]})
+        # Predefined Colors
+        self.__dict__.update({"colors":[
+           '#2f7ed8', 
+           '#0d233a', 
+           '#8bbc21', 
+           '#910000', 
+           '#1aadce', 
+           '#492970',
+           '#f28f43', 
+           '#77a1e5', 
+           '#c42525', 
+           '#a6c96a'
+        ]})
 
     def set_colors(self,colors):
         self.__dict__.update({"colors":colors})
@@ -328,6 +342,8 @@ class xAxisOptions(BaseOptions):
             "step": int,
             "style": {
                 "color": str,
+                "fontSize": int,
+                "fontWeight": str,
             },
             "useHTML": bool,
             "x": int,
@@ -459,7 +475,7 @@ class yAxisOptions(BaseOptions):
             "style": {
                 "color": str,
             },
-            "text": str,
+            "text": (str, bool),
         },
         "type": str,    
     }
