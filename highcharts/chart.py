@@ -20,6 +20,7 @@ from PyHighcharts.highcharts.common import Formatter
 
 # Stdlib Imports
 import datetime, random, webbrowser, os, inspect
+from _abcoll import Iterable
 
 TMP_DIR = "/tmp/highcharts_tmp/"
 DEFAULT_HEADERS = """<script type='text/javascript' src=\
@@ -61,6 +62,53 @@ def update_template(tmp, key, val, tab_depth=1):
                 tmp = update_template(tmp, subkey, subval, tab_depth=3)
             tmp += "\t\t" + "},\n"
             return tmp
+        elif isinstance(val, Iterable) and not isinstance(val, str):
+            new_vals = []
+            for item in val:
+                if isinstance(item, Iterable) and not isinstance(item, str):
+                    new_items = []
+                    for subitem in item:
+                        if isinstance(subitem, datetime.datetime):
+                            utc = subitem.utctimetuple()
+                            new_items.append("Date.UTC({year},{month},{day},{hours},{minutes},{seconds},{millisec})"
+                                        .format(year=utc[0], month=utc[1], day=utc[2], hours=utc[3], 
+                                                minutes=utc[4], seconds=utc[5], millisec=subitem.microsecond/1000))
+                        elif isinstance(subitem, bool):
+                            # Convert Bool to js equiv.
+                            bool_mapping = {
+                                False: 'false',
+                                True: 'true',
+                            }
+                            new_items.append(bool_mapping[subitem])
+                        elif isinstance(subitem, str):
+                            # Need to keep string quotes
+                            new_items.append("\'" + subitem + "\'")
+                        else:
+                            new_items.append(str(subitem))
+                    new_vals.append("[{}]".format(",".join(new_items)))
+                elif isinstance(item, datetime.datetime):
+                    utc = item.utctimetuple()
+                    new_vals.append("Date.UTC({year},{month},{day},{hours},{minutes},{seconds},{millisec})"
+                           .format(year=utc[0], month=utc[1], day=utc[2], hours=utc[3],
+                                   minutes=utc[4], seconds=utc[5], millisec=item.microsecond/1000))
+                elif isinstance(item, bool):
+                    # Convert Bool to js equiv.
+                    bool_mapping = {
+                        False: 'false',
+                        True: 'true',
+                    }
+                    new_vals.append(bool_mapping[item])
+                elif isinstance(item, str):
+                    # Need to keep string quotes
+                    new_vals.append("\'" + item + "\'")
+                else:
+                    new_vals.append(str(item))
+            return tmp + "{tabs}{key}:[{vals}],\n".format(tabs="\t"*tab_depth, key=key, vals=",".join(new_vals))
+        elif isinstance(val, datetime.datetime):
+            utc = val.utctimetuple()
+            val = ("Date.UTC({year},{month},{day},{hours},{minutes},{seconds},{millisec})"
+                    .format(year=utc[0], month=utc[1], day=utc[2], hours=utc[3],
+                            minutes=utc[4], seconds=utc[5], millisec=val.microsecond/1000))
         elif isinstance(val, bool):
             # Convert Bool to js equiv.
             bool_mapping = {
@@ -87,7 +135,7 @@ def series_formatter(data):
     for data_set in data['data']:
         temp += "{\n"
         for key, val in  data_set.__dict__.items():
-            temp = update_template(temp, key, val, tab_depth=2)
+            temp = update_template(temp, key, val, tab_depth=2)    
         temp += "\t},"
     return temp
 
