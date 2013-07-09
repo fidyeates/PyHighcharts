@@ -71,7 +71,7 @@ def update_template(tmp, key, val, tab_depth=1):
                         if isinstance(subitem, datetime.datetime):
                             utc = subitem.utctimetuple()
                             new_items.append("Date.UTC({year},{month},{day},{hours},{minutes},{seconds},{millisec})"
-                                        .format(year=utc[0], month=utc[1], day=utc[2], hours=utc[3], 
+                                        .format(year=utc[0], month=utc[1]-1, day=utc[2], hours=utc[3], 
                                                 minutes=utc[4], seconds=utc[5], millisec=subitem.microsecond/1000))
                         elif isinstance(subitem, bool):
                             # Convert Bool to js equiv.
