@@ -275,6 +275,8 @@ class Highchart(object):
             "month": date.month - 1,
             "day": date.day,
             "hour": date.hour,
+            "minute": date.minute,
+            "second": date.second,
         }
         formatted_date = "Date.UTC({year}, {month}, {day}, {hour}, 0, 0)"
         formatted_date = formatted_date.format(**date_dict)
