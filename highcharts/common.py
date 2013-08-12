@@ -7,7 +7,7 @@ Common Functions For PyHighcharts
 FORMATTER_TYPE_MAPPINGS = {
     "default": "function() { return this.value }",
     "date": "function() { return''+Highcharts.dateFormat('%e. %b %Y \
-        %H:00:00',this.x) + ': '+ this.y; }",
+        %H:%M:%S',this.x) + ': '+ this.y; }",
     "pie": "function() { return '<b>'+ this.point.name +'</b>: '+ \
     this.percentage +' %'; }",
     "pound_yAxis": "function() { '&#163' + return this.value }",
