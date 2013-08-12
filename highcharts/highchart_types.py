@@ -279,6 +279,7 @@ DATA_SERIES_ALLOWED_OPTIONS = {
 	"type": str,
 	"xAxis": int,
 	"yAxis": int,
+	"marker": dict,
 }
 
 DEFAULT_OPTIONS = {
