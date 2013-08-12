@@ -259,7 +259,7 @@ PLOT_OPTION_ALLOWED_ARGS = {
 		"cropThreshold": int,
 		"dashStyle": str,
 		"lineWidth": int,
-		"marker": NotImplemented,
+		"marker": dict,
 		"pointInterval": int,
 		"pointPlacement": str,
 		"pointStart": (int,str),
