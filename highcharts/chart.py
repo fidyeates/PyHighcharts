@@ -278,7 +278,7 @@ class Highchart(object):
             "minute": date.minute,
             "second": date.second,
         }
-        formatted_date = "Date.UTC({year}, {month}, {day}, {hour}, 0, 0)"
+        formatted_date = "Date.UTC({year}, {month}, {day}, {hour}, {minute}, {second})"
         formatted_date = formatted_date.format(**date_dict)
         if not self.options['plotOptions'].__dict__: 
             self.hold_point_start = formatted_date
