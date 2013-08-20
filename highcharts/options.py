@@ -6,6 +6,7 @@ except ImportError:
     except ImportError:
         import simplejson as json
 
+
 from highchart_types import OptionTypeError, Series, SeriesOptions
 from common import Formatter
 
