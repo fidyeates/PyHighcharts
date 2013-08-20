@@ -137,7 +137,7 @@ PLOT_OPTION_ALLOWED_ARGS = {
 		"minPointLength": int,
 		"pointPadding": float,
 		"pointRange": int,
-		"pointWidth": int,
+		"pointWidth": (int, float),
 		"pointInterval": int,
 		"pointPlacement": str,
 		"pointStart": (int,str),
