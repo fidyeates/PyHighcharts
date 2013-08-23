@@ -267,7 +267,7 @@ class Highchart(object):
         """ Set Plot Start Date """
         if isinstance(date, (int, float)):
             date = datetime.datetime.fromtimestamp(date)
-        elif not isinstance(date, datetime):
+        elif not isinstance(date, datetime.datetime):
             error = "Start Date Format Currently Not Supported: %s" % date
             raise HighchartError(error)
         date_dict = {
