@@ -223,6 +223,7 @@ PLOT_OPTION_ALLOWED_ARGS = {
 		"size": (int,str),
 		"slicedOffset": int,
 		"startAngle": int,
+		"dataLabels": (dict)
 	},
 	"scatter": {
 		"allowPointSelect": bool,

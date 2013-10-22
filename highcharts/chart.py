@@ -38,7 +38,9 @@ DEFAULT_POINT_INTERVAL = 86400000
 
 FORMAT_SPECIAL_CASES = {
     "formatter": "formatter",
-    "pointStart": "skip_quotes"
+    "pointStart": "skip_quotes",
+    "events": "skip_quotes",
+    "load": "skip_quotes"
 }
 
 class HighchartError(Exception):
@@ -98,6 +100,8 @@ def update_template(tmp, key, val, tab_depth=1):
                         True: 'true',
                     }
                     new_vals.append(bool_mapping[item])
+                elif item == None:
+                    new_vals.append('null')
                 elif isinstance(item, str):
                     # Need to keep string quotes
                     new_vals.append("\'" + item + "\'")
@@ -116,6 +120,8 @@ def update_template(tmp, key, val, tab_depth=1):
                 True: 'true',
             }
             val = bool_mapping[val]
+        elif val == None:
+            val = 'null'
         elif isinstance(val, str):
             # Need to keep string quotes
             val = "\'" + val + "\'"
@@ -202,12 +208,23 @@ class Highchart(object):
         self.__load_defaults__()
 
         # Process kwargs
-        allowed_kwargs = ["width", "height", "renderTo", "backgroundColor"]
+        allowed_kwargs = [
+            "width", 
+            "height", 
+            "renderTo", 
+            "backgroundColor", 
+            "events", 
+            "marginTop", 
+            "marginRight", 
+            "marginLeft"
+        ]
 
         for keyword in allowed_kwargs:
             if keyword in kwargs:
-                self.options['chart'].update_dict(**{keyword:kwargs[keyword]})
-
+                if keyword == 'events':
+                    self.options['chart'].update_dict(**{'events':{kwargs['events'].event_type:kwargs['events'].event_method}})
+                else:
+                    self.options['chart'].update_dict(**{keyword:kwargs[keyword]})
         # Some Extra Vals to store: 
         self.data_set_count = 0
 
@@ -222,7 +239,6 @@ class Highchart(object):
         rendered = tmp.format(**self.__export_options__())
         if ret: 
             return rendered
-        print rendered
 
 
     def __export_options__(self):

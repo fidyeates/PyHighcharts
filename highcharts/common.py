@@ -21,9 +21,9 @@ FORMATTER_TYPE_MAPPINGS = {
 class Formatter(object):
     """ Base Formatter Class """
 
-    def __init__(self, format_type):
+    def __init__(self, format_type=None, format_string=FORMATTER_TYPE_MAPPINGS['default_tooltip']):
         self.__dict__.update({
-            'formatter':FORMATTER_TYPE_MAPPINGS[format_type]
+            'formatter':FORMATTER_TYPE_MAPPINGS.get(format_type, format_string)
             })
 
 def path_to_array(path):
@@ -45,6 +45,11 @@ def path_to_array(path):
     """
     return path
 
+class Event(object):
+
+    def __init__(self, event_type, event_method):
+        self.event_type = event_type
+        self.event_method = event_method
 
 if __name__ == '__main__':
     print path_to_array("M 4687 2398 L 4679 2402 4679 2398 Z")

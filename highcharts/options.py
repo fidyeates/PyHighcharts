@@ -8,7 +8,7 @@ except ImportError:
 
 
 from highchart_types import OptionTypeError, Series, SeriesOptions
-from common import Formatter
+from common import Formatter, Event
 
 
 
@@ -41,20 +41,26 @@ class BaseOptions(object):
                     if len(k) > 2:  
                         raise NotImplementedError
                     else:
-                        if self.__validate_options__(k[1],v,self.ALLOWED_OPTIONS[k[0]][k[1]]):
+                        if self.__validate_options__(k[1],v,self.ALLOWED_OPTIONS[k[0]][k[1]]) or not v:
                             if not k[0] in self.__dict__:
                                 self.__dict__.update({k[0]:{}})
                             self.__dict__[k[0]].update({k[1]:v})
-                        else: OptionTypeError("Option Type Mismatch: Expected: %s" % self.ALLOWED_OPTIONS[k[0]][k[1]]) 
+                        else: 
+                            print k, v
+                            raise OptionTypeError("Option Type Mismatch: Expected: %s" % self.ALLOWED_OPTIONS[k[0]][k[1]]) 
                 else:
-                    if self.__validate_options__(k[0],v,self.ALLOWED_OPTIONS[k[0]]):
-                        if isinstance(v,dict) and isinstance(ALLOWED_OPTIONS[k[0]],dict):
+                    if self.__validate_options__(k[0],v,self.ALLOWED_OPTIONS[k[0]]) or not v:
+                        if isinstance(v,dict) and isinstance(self.ALLOWED_OPTIONS[k[0]],dict):
                             self.__dict__.update({k[0]:{v[v.keys()[0]]:v.values()[0]}})
                         else:
                             self.__dict__.update({k[0]:v})
-                    else:   
+                    else:
+                        print k, v, self.ALLOWED_OPTIONS
                         raise OptionTypeError("Option Type Mismatch: Expected: %s" % self.ALLOWED_OPTIONS[k[0]])
-            else:   
+            else:
+                print self.ALLOWED_OPTIONS
+                print self.__name__
+                print k, v
                 raise OptionTypeError("Not An Accepted Option Type: %s" % k[0])
 
     def __getattr__(self,item):
@@ -72,7 +78,7 @@ class ChartOptions(BaseOptions):
         "borderWidth": int,
         "className": str,
         "defaultSeriesType": str,
-        "events": NotImplemented,
+        "events": (Event, dict),
         "height": (int,str),
         "ignoreHiddenSeries": bool,
         "inverted": bool,
