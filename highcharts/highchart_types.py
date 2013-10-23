@@ -224,6 +224,7 @@ PLOT_OPTION_ALLOWED_ARGS = {
 		"slicedOffset": int,
 		"startAngle": int,
 		"dataLabels": dict,
+		"showInLegend": bool
 	},
 	"scatter": {
 		"allowPointSelect": bool,
