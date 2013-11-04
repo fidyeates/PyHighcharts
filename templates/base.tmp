@@ -2,56 +2,24 @@ $(function () {{
   var chart;
   $(document).ready(function () {{
     chart = new Highcharts.Chart({{
-        chart: {{
-            {chart}
-        }},
+        chart: {chart},
         colors: {colors},
-        credits: {{
-            {credits}
-        }},
-        exporting: {{
-            {exporting}
-        }},
-        global: {{
-            {global}
-        }},
-        labels: {{
-            {labels}
-        }},
-        lang: {{
-            {lang}
-        }},
-        legend: {{
-            {legend}
-        }},
-        loading: {{
-            {loading}
-        }},
-        navigation: {{
-            {navigation}
-        }},
-        pane: {{
-            {pane}
-        }},
-        plotOptions: {{
-            {plotOptions}
-        }},
+        credits: {credits},
+        exporting: {exporting},
+        global: {global},
+        labels: {labels},
+        lang: {lang},
+        legend: {legend},
+        loading: {loading},
+        navigation: {navigation},
+        pane: {pane},
+        plotOptions: {plotOptions},
         series: [{series}],
-        subtitle: {{
-            {subtitle}
-        }},
-        title: {{
-            {title}
-        }},
-        tooltip: {{
-            {tooltip}
-        }},
-        xAxis: {{
-            {xAxis}
-        }},
-        yAxis: {{
-            {yAxis}
-        }},
+        subtitle: {subtitle},
+        title: {title},
+        tooltip: {tooltip},
+        xAxis: {xAxis},
+        yAxis: {yAxis},
     }});
   }});
 }});
