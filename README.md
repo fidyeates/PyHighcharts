@@ -11,7 +11,7 @@ And remember Highcharts is only free for non-commercial use: Pop over to <a href
 Using Highcharts is so simple: You can even do it on the command line!
 
 <pre><code>from PyHighcharts import Highchart
-H = Highchart(width='500 px',height='500 px',renderTo='container')
+H = Highchart(width=500, height=500, renderTo='container')
 data = [1,2,3,4,5,6,7,8,9,10]
 H.add_data_set(data,type='line',name='test_data')
 H.show()</code></pre>
