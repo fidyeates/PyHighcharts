@@ -333,6 +333,17 @@ class SeriesOptions(object):
 		self.process_kwargs(DEFAULT_OPTIONS.get(series_type,{}),series_type)
 
 
+class HighchartsError(Exception):
+
+	def __init__(self, *args):
+		self.args = args
+
+
+class MultiAxis(object):
+
+	def __init__(self, axis):
+		self.axis = axis
+
 
 class Series(object):
 
