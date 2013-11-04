@@ -13,7 +13,7 @@ from PyHighcharts.highcharts.options import ChartOptions, \
     PlotOptions, SeriesData, SubtitleOptions, TitleOptions, \
     TooltipOptions, xAxisOptions, yAxisOptions 
 
-from PyHighcharts.highcharts.highchart_types import Series, SeriesOptions
+from PyHighcharts.highcharts.highchart_types import Series, SeriesOptions, HighchartsError, MultiAxis
 from PyHighcharts.highcharts.common import Formatter
 
 
@@ -40,7 +40,8 @@ FORMAT_SPECIAL_CASES = {
     "formatter": "formatter",
     "pointStart": "skip_quotes",
     "events": "skip_quotes",
-    "load": "skip_quotes"
+    "load": "skip_quotes",
+    "multiaxis": "multiaxis"
 }
 
 class HighchartError(Exception):
@@ -131,6 +132,11 @@ def update_template(tmp, key, val, tab_depth=1):
             tmp += "\t"*tab_depth + "%s: %s,\n" % (key, val)
         elif key == "formatter":
             tmp += "\t"*tab_depth + "%s: %s,\n" % (key, val.formatter)
+        elif FORMAT_SPECIAL_CASES[key] == "multiaxis":
+            st = ""
+            for k, v in val.__dict__.iteritems():
+                st = update_template(st, k, v, tab_depth=tab_depth+1)
+            return st
         else:
             raise NotImplementedError
     return tmp
@@ -141,7 +147,7 @@ def series_formatter(data):
     for data_set in data['data']:
         temp += "{\n"
         for key, val in  data_set.__dict__.items():
-            temp = update_template(temp, key, val, tab_depth=2)    
+            temp = update_template(temp, key, val, tab_depth=1)    
         temp += "\t},"
     return temp
 
@@ -154,9 +160,19 @@ def chart_formatter(option_type, data):
         "series": series_formatter,
     }
     tmp = ""
+    #print option_type, data
     if option_type in special_cases:
         tmp += special_cases[option_type](data)
+    elif option_type == "yAxis" and data.get('axis'):
+        tmp += "[{\n"
+        for i, ax in enumerate(data['axis'], 1):
+            tmp += update_template("", 'multiaxis', ax, tab_depth=1)
+            if not i == len(data['axis']):
+                tmp += "\t},{\n"
+        tmp += "\t}]"
+        print tmp
     else:
+        tmp += "{\n" 
         for key, val in data.items():
             if isinstance(val, dict):
                 tmp += "\t%s: {\n" % key
@@ -169,7 +185,8 @@ def chart_formatter(option_type, data):
                     tmp = update_template(tmp, subkey, subval, tab_depth=3)
                 tmp += "\t\t" + "},\n"
             else:
-                tmp = update_template(tmp, key, val)
+                tmp = update_template(tmp, key, val, tab_depth=2)
+        tmp += "\t}"
     return tmp
 
 
@@ -389,6 +406,14 @@ class Highchart(object):
     def generate(self):
         """ __render__ Wrapper """
         return self.__render__(ret=True)
+
+
+    def set_yAxis(self, *axis):
+        if all(map(lambda a: isinstance(a, yAxisOptions), axis)):
+            self.options['yAxis'] = MultiAxis(axis)
+        else:
+            raise HighchartsError("All Axis Must Be Of Type: yAxisOptions")
+
 
 
     @staticmethod
