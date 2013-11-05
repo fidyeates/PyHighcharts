@@ -272,6 +272,7 @@ PLOT_OPTION_ALLOWED_ARGS = {
 }
 
 DATA_SERIES_ALLOWED_OPTIONS = {
+    'color': str,
 	"dataParser": NotImplemented,
 	"dataURL": NotImplemented,
 	"index": int,
