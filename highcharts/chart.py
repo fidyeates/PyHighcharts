@@ -283,7 +283,7 @@ class Highchart(object):
     def colors(self, colors=None):
         """ Bind Color Array """
         if not colors:
-            return self.options["colors"].list()
+            return self.options["colors"].__dict__.values() if self.options['colors'] is not None else []
         else:
             self.options["colors"].set_colors(colors)
 
