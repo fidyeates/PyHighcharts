@@ -16,6 +16,19 @@ FORMATTER_TYPE_MAPPINGS = {
     "default_tooltip": "function () { return'<b>'+ this.series.name + '</b>: ' + this.y; }",
     "percent_tooltip": "function () { return'<b>'+ this.series.name + '</b>: ' + this.y + ' %'; }",
     "date_percent_tooltip": "function () { return''+Highcharts.dateFormat('%e. %b %Y',this.x) + '<br><b>'+ this.series.name + '</b>: ' + this.y + ' %'; }",
+    'filesize': """
+function getReadableFileSizeString() {
+    fileSizeInBytes = this.y;
+    var i = -1;
+    var byteUnits = [' kB', ' MB', ' GB', ' TB', 'PB', 'EB', 'ZB', 'YB'];
+    do {
+        fileSizeInBytes = fileSizeInBytes / 1024;
+        i++;
+    } while (fileSizeInBytes > 1024);
+
+    return Math.max(fileSizeInBytes, 0.1).toFixed(1) + byteUnits[i];
+}
+"""
 }
 
 class Formatter(object):
