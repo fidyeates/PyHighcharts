@@ -17,7 +17,7 @@ FORMATTER_TYPE_MAPPINGS = {
     "percent_tooltip": "function () { return'<b>'+ this.series.name + '</b>: ' + this.y + ' %'; }",
     "date_percent_tooltip": "function () { return''+Highcharts.dateFormat('%e. %b %Y',this.x) + '<br><b>'+ this.series.name + '</b>: ' + this.y + ' %'; }",
     'filesize': """
-function getReadableFileSizeString() {
+function() {
     fileSizeInBytes = this.y;
     var i = -1;
     var byteUnits = [' kB', ' MB', ' GB', ' TB', 'PB', 'EB', 'ZB', 'YB'];
@@ -28,16 +28,74 @@ function getReadableFileSizeString() {
 
     return Math.max(fileSizeInBytes, 0.1).toFixed(1) + byteUnits[i];
 }
-"""
+""",
+    'duration': """
+function() {
+    seconds = this.value;
+
+    days = Math.floor(seconds / 86400);
+    seconds = seconds % 86400;
+
+    hours = Math.floor(seconds / 3600);
+    seconds = seconds % 3600;
+
+    mins = Math.floor(seconds / 60);
+    seconds = seconds % 60;
+
+    res = "";
+    if(days > 0){
+        res += days + " d ";
+    }
+    if(hours > 0){
+        res += hours + ' hr ';
+    }
+    if(mins > 0){
+        res += mins + ' m ';
+    }
+    if(seconds > 0){
+        res += seconds + ' s ';
+    }
+    return res;
 }
+""",
+    'date_duration_tooltip': """
+function() {
+    seconds = this.y;
+
+    days = Math.floor(seconds / 86400);
+    seconds = seconds % 86400;
+
+    hours = Math.floor(seconds / 3600);
+    seconds = seconds % 3600;
+
+    mins = Math.floor(seconds / 60);
+    seconds = seconds % 60;
+
+    res = "";
+    if(days > 0){
+        res += days + " d ";
+    }
+    if(hours > 0){
+        res += hours + ' hr ';
+    }
+    if(mins > 0){
+        res += mins + ' m ';
+    }
+    if(seconds > 0){
+        res += seconds + ' s ';
+    }
+    return ''+Highcharts.dateFormat('%e. %b %Y',this.x) + '<br><b>'+ this.series.name + '</b>: ' + res;
+}
+""",
+}
+
 
 class Formatter(object):
     """ Base Formatter Class """
 
     def __init__(self, format_type=None, format_string=FORMATTER_TYPE_MAPPINGS['default_tooltip']):
-        self.__dict__.update({
-            'formatter':FORMATTER_TYPE_MAPPINGS.get(format_type, format_string)
-            })
+        self.__dict__.update({'formatter': FORMATTER_TYPE_MAPPINGS.get(format_type, format_string)})
+
 
 def path_to_array(path):
     print path
@@ -49,14 +107,8 @@ def path_to_array(path):
             path[i] = float(v)
         except:
             pass
-    """
-    for (var i = 0; i < path.length; i++) {
-        if (!/[a-zA-Z]/.test(path[i])) {
-            path[i] = parseFloat(path[i]);
-        }
-    }
-    """
     return path
+
 
 class Event(object):
 
