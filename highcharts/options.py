@@ -203,7 +203,7 @@ class LegendOptions(BaseOptions):
         "itemMarginTop": int,
         "itemStyle": NotImplemented,
         "itemWidth": int,
-        "labelFormatter": NotImplemented,
+        "labelFormatter": Formatter,
         "layout": str,
         "lineHeight": int,
         "margin": int,
