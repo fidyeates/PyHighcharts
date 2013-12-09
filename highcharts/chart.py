@@ -38,7 +38,7 @@ DEFAULT_POINT_INTERVAL = 86400000
 
 FORMAT_SPECIAL_CASES = {
     "formatter": "formatter",
-    "lineFormatter": "formatter",
+    "labelFormatter": "formatter",
     "pointStart": "skip_quotes",
     "events": "skip_quotes",
     "load": "skip_quotes",
