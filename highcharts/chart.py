@@ -131,7 +131,7 @@ def update_template(tmp, key, val, tab_depth=1):
     else:
         if FORMAT_SPECIAL_CASES[key] == "skip_quotes":
             tmp += "\t"*tab_depth + "%s: %s,\n" % (key, val)
-        elif key == "formatter":
+        elif FORMAT_SPECIAL_CASES[key] == "formatter":
             tmp += "\t"*tab_depth + "%s: %s,\n" % (key, val.formatter)
         elif FORMAT_SPECIAL_CASES[key] == "multiaxis":
             st = ""
