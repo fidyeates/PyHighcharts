@@ -201,7 +201,9 @@ class LegendOptions(BaseOptions):
         "itemHoverStyle": NotImplemented,
         "itemMarginBottom": int,
         "itemMarginTop": int,
-        "itemStyle": dict,
+        "itemStyle": {
+            "color": str,   
+        },
         "itemWidth": int,
         "labelFormatter": Formatter,
         "layout": str,
