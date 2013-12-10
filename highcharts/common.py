@@ -34,13 +34,13 @@ function() {
     seconds = this.value;
 
     days = Math.floor(seconds / 86400);
-    seconds = seconds % 86400;
+    seconds = seconds - (days * 86400);
 
     hours = Math.floor(seconds / 3600);
-    seconds = seconds % 3600;
+    seconds = seconds - (hours * 3600);
 
     mins = Math.floor(seconds / 60);
-    seconds = seconds % 60;
+    seconds = seconds - (mins * 60);
 
     res = "";
     if(days > 0){
@@ -63,13 +63,13 @@ function() {
     seconds = this.y;
 
     days = Math.floor(seconds / 86400);
-    seconds = seconds % 86400;
+    seconds = seconds - (days * 86400);
 
     hours = Math.floor(seconds / 3600);
-    seconds = seconds % 3600;
+    seconds = seconds - (hours * 3600);
 
     mins = Math.floor(seconds / 60);
-    seconds = seconds % 60;
+    seconds = seconds - (mins * 60);
 
     res = "";
     if(days > 0){
