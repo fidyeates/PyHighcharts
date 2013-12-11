@@ -6,8 +6,7 @@ Common Functions For PyHighcharts
 
 FORMATTER_TYPE_MAPPINGS = {
     "default": "function() { return this.value }",
-    "date": "function() { return''+Highcharts.dateFormat('%e. %b %Y \
-        %H:%M:%S',this.x) + ': '+ this.y; }",
+    "date": "function() { return''+Highcharts.dateFormat('%e. %b %Y %H:%M:%S',this.x) + ': '+ this.y; }",
     "pie": "function() { return '<b>'+ this.point.name +'</b>: '+ \
     this.percentage +' %'; }",
     "pound_yAxis": "function() { '&#163' + return this.value }",
@@ -15,8 +14,21 @@ FORMATTER_TYPE_MAPPINGS = {
     "percent": "function() { return this.value + ' %' }",
     "default_tooltip": "function () { return'<b>'+ this.series.name + '</b>: ' + this.y; }",
     "percent_tooltip": "function () { return'<b>'+ this.series.name + '</b>: ' + this.y + ' %'; }",
-    "date_percent_tooltip": "function () { return''+Highcharts.dateFormat('%e. %b %Y',this.x) + '<br><b>'+ this.series.name + '</b>: ' + this.y + ' %'; }",
+    "date_percent_tooltip": "function () { return''+Highcharts.dateFormat('%e. %b %Y',this.x) + '<br/><b>'+ this.series.name + '</b>: ' + this.y + ' %'; }",
     'filesize': """
+function() {
+    fileSizeInBytes = this.value;
+    var i = -1;
+    var byteUnits = [' kB', ' MB', ' GB', ' TB', 'PB', 'EB', 'ZB', 'YB'];
+    do {
+        fileSizeInBytes = fileSizeInBytes / 1024;
+        i++;
+    } while (fileSizeInBytes > 1024);
+
+    return Math.max(fileSizeInBytes, 0.1).toFixed(1) + byteUnits[i];
+}
+""",
+    'date_filesize_tooltip': """
 function() {
     fileSizeInBytes = this.y;
     var i = -1;
@@ -26,7 +38,20 @@ function() {
         i++;
     } while (fileSizeInBytes > 1024);
 
-    return Math.max(fileSizeInBytes, 0.1).toFixed(1) + byteUnits[i];
+    return ''+Highcharts.dateFormat('%e. %b %Y %H:%M:%S',this.x) + '<br/><b>' + this.series.name + '</b>: ' + Math.max(fileSizeInBytes, 0.1).toFixed(1) + byteUnits[i];
+}
+""",
+    'filesize_tooltip': """
+function() {
+    fileSizeInBytes = this.y;
+    var i = -1;
+    var byteUnits = [' kB', ' MB', ' GB', ' TB', 'PB', 'EB', 'ZB', 'YB'];
+    do {
+        fileSizeInBytes = fileSizeInBytes / 1024;
+        i++;
+    } while (fileSizeInBytes > 1024);
+
+    return '<b>' + this.series.name + '</b>: ' + Math.max(fileSizeInBytes, 0.1).toFixed(1) + byteUnits[i];
 }
 """,
     'duration': """
@@ -84,7 +109,7 @@ function() {
     if(seconds > 0){
         res += seconds + ' s ';
     }
-    return ''+Highcharts.dateFormat('%e. %b %Y',this.x) + '<br><b>'+ this.series.name + '</b>: ' + res;
+    return ''+Highcharts.dateFormat('%e. %b %Y %H:%M:%S',this.x) + '<br/><b>'+ this.series.name + '</b>: ' + res;
 }
 """,
 }
