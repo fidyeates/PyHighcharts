@@ -22,6 +22,7 @@ from PyHighcharts.highcharts.common import Formatter
 import datetime, random, webbrowser, os, inspect
 from _abcoll import Iterable
 
+global TMP_DIR
 TMP_DIR = "/tmp/highcharts_tmp/"
 DEFAULT_HEADERS = """<script type='text/javascript' src=\
 'https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'>\
