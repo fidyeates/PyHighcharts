@@ -45,6 +45,9 @@ FORMAT_SPECIAL_CASES = {
     "multiaxis": "multiaxis"
 }
 
+def set_temp_dir(temp_dir):
+    TMP_DIR = temp_dir
+
 class HighchartError(Exception):
     """ Highcharts Error Class """
     def __init__(self, *args):
