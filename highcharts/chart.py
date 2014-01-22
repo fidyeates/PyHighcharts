@@ -47,7 +47,7 @@ FORMAT_SPECIAL_CASES = {
 }
 
 def set_temp_dir(temp_dir):
-    TMP_DIR = temp_dir
+    globals()['TMP_DIR'] = temp_dir
 
 class HighchartError(Exception):
     """ Highcharts Error Class """
@@ -399,7 +399,10 @@ class Highchart(object):
         if not os.path.exists(TMP_DIR): 
             os.mkdir(TMP_DIR)
         new_filename = "%x.html" % (random.randint(pow(16, 5), pow(16, 6)-1))
-        new_fn = TMP_DIR + new_filename
+        temp_dir = globals()['TMP_DIR']
+        if not temp_dir[-1] == "/":
+            temp_dir += "/"
+        new_fn = temp_dir + new_filename
         with open(SHOW_TEMPLATE, 'rb') as file_open:
             tmp = file_open.read()
         html = tmp.format(chart_data=self.__render__(ret=True))
