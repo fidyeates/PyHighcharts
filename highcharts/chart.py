@@ -73,7 +73,13 @@ def update_template(tmp, key, val, tab_depth=1):
         elif isinstance(val, Iterable) and not isinstance(val, str):
             new_vals = []
             for item in val:
-                if isinstance(item, Iterable) and not isinstance(item, str):
+                if isinstance(item, dict):
+                    ntmp = "{"
+                    for k,v in item.items():
+                        ntmp = update_template(ntmp, k, v, tab_depth=0)
+                    ntmp += "}"
+                    new_vals.append(ntmp)
+                elif isinstance(item, Iterable) and not isinstance(item, str):
                     new_items = []
                     for subitem in item:
                         if isinstance(subitem, datetime.datetime):
