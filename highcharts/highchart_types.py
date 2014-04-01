@@ -284,6 +284,7 @@ DATA_SERIES_ALLOWED_OPTIONS = {
 	"yAxis": int,
 	"marker": dict,
     'showInLegend': bool,
+    "visible": bool,
 }
 
 DEFAULT_OPTIONS = {
