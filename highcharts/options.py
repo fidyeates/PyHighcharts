@@ -270,6 +270,7 @@ class PlotOptions(BaseOptions):
         "scatter": SeriesOptions,
         "series": SeriesOptions,
         "spline": SeriesOptions,
+        "boxplot": SeriesOptions,
     }
 
 
