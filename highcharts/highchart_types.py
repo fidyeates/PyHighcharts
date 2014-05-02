@@ -227,6 +227,23 @@ PLOT_OPTION_ALLOWED_ARGS = {
 		"dataLabels": dict,
 		"showInLegend": bool
 	},
+	"boxplot": {
+		"allowPointSelect": bool,
+		"borderColor": str,
+		"borderWidth": int,
+		"center": list,
+		"ignoreHiddenPoint": bool,
+		"innerSize": int,
+		"lineWidth": int,
+		"marker": dict,
+		"pointPlacement": str,
+		"shadow": bool,
+		"size": (int,str),
+		"slicedOffset": int,
+		"startAngle": int,
+		"dataLabels": dict,
+		"showInLegend": bool
+	},
 	"scatter": {
 		"allowPointSelect": bool,
 		"connectNulls": bool,

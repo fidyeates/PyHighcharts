@@ -25,8 +25,9 @@ from _abcoll import Iterable
 global TMP_DIR
 TMP_DIR = "/tmp/highcharts_tmp/"
 DEFAULT_HEADERS = """<script type='text/javascript' src=\
-'https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'>\
-</script>\n<script src="http://code.highcharts.com/highcharts.js"></script>\n \
+'https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/highcharts-more.js"></script>
 <script src="http://code.highcharts.com/modules/exporting.js"></script>"""
 
 ROOT_PATH = os.path.dirname(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))))
