@@ -167,6 +167,7 @@ PLOT_OPTION_ALLOWED_ARGS = {
 		"shadow": bool,
 		"stacking": str,
 		"turboThreshold": int,
+		"showInLegend": bool,
 
 	},
 	"gauge": {
