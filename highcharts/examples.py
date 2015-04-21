@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: UTF-8 -*-
 """ PyHighcharts: examples.py
 Basic Examples 
 """
@@ -16,11 +17,11 @@ EXAMPLE_CONFIG = {
     }
 }
 
-def pie_example():
+def pie_example_unicode_chars():
     """ Basic Piechart Example """
     chart = Highchart()
-    chart.title("Pac Man Highchart")
-    chart.add_data_set([["Does Not Resemble Pac Man", 25],
+    chart.title(u"Pac Man Highchart with non-ascii chars ą")
+    chart.add_data_set([[u"Does Not Resemble Pac Man ą", 25],
         ["Resembes Pac Man", 75]],
         series_type="pie",
         name="",
