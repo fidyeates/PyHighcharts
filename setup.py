@@ -2,9 +2,8 @@ from setuptools import setup, find_packages
 setup(
     name="PyHighcharts",
     version="2.0",
-    package_dir={'': 'src'},
+    package_dir="",
     packages=['pyhighcharts'],
-    scripts=["bin/*"],
 
     install_requires=[],
     package_data={},
