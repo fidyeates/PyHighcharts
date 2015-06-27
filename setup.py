@@ -11,7 +11,7 @@ setup(
 
     # metadata for upload to PyPI
     author="fin.yeates",
-    author_email="",
+    author_email="findlay.yeates@deitek.co.uk",
     description="A python wrapper for the highcharts charting library",
     license="PSF",
     keywords="PyHighcharts",
