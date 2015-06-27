@@ -83,4 +83,10 @@ chart.add_data_series(ChartTypes.line, data, name="Test")
 template.format(chart.script())
 ```
 
+## Todo:
+
+* More Maps & Stocks work
+* Cleaner code and some more helpful hooks
+* Unittests
+
 Reference: [Highcharts API](http://api.highcharts.com/highcharts)
