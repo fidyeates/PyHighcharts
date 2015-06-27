@@ -13,6 +13,7 @@ setup(
     author_email="findlay.yeates@deitek.co.uk",
     description="A python wrapper for the highcharts charting library",
     license="PSF",
-    keywords="PyHighcharts",
+    keywords=["PyHighcharts", "highcharts"],
     url="https://github.com/fidyeates/PyHighcharts/tree/dev",
+    download_url="https://github.com/fidyeates/PyHighcharts/tarball/2.0"
 )
