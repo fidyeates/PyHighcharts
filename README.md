@@ -1,5 +1,7 @@
 # PyHighcharts
 
+**This version of PyHighcharts is going to be replaced by v2.0 soon, check out the dev branch: [PyHighcharts-dev](https://github.com/fidyeates/PyHighcharts/tree/dev)!**
+
 A convenient wrapper for Highchart generation procedurally or on the command-line to browser output.
 
 For documentation on highcharts visit: <a href="http://api.highcharts.com/highcharts" target="_blank">Highcharts API</a>
