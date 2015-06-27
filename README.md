@@ -12,6 +12,19 @@ The older version of the code is still available at: [PyHighcharts v1.0](https:/
 
 This overhaul is intended to make the invocation of the PyHighcharts wrapper more pythonesque and allow for more modular functionality and better integration with web frameworks.
 
+## Installation
+
+The easiest way to get pyhighcharts would be via PyPi
+
+    sudo pip install PyHighcharts
+
+Alternatively you can clone this repo and install from setup.py
+
+    git clone https://github.com/fidyeates/PyHighcharts.git
+    cd PyHighcharts
+    git checkout dev
+    sudo python setup.py install
+
 ## Whats New?
 
 There are quite a few new features in PyHighcharts v2.0, we're attempting to bring stocks and maps into the forefront and allow customisation of charts in a less painful manner than previously.
