@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 setup(
     name="PyHighcharts",
-    version="0.1",
+    version="2.0",
     package_dir={'': 'src'},
     packages=['pyhighcharts'],
     scripts=["bin/*"],
@@ -10,10 +10,10 @@ setup(
     package_data={},
 
     # metadata for upload to PyPI
-    author="",
+    author="fin.yeates",
     author_email="",
-    description="",
+    description="A python wrapper for the highcharts charting library",
     license="PSF",
     keywords="PyHighcharts",
-    url="",  # project home page, if any
+    url="https://github.com/fidyeates/PyHighcharts/tree/dev",
 )

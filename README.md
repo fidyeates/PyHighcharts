@@ -1,5 +1,11 @@
 # Project: PyHighcharts
 
+## License
+
+Please be aware that highcharts is only free for non-commercial use: Pop over to [Highcharts](http://shop.highsoft.com/) for licencing information.
+
+## Overview
+
 PyHighcharts has changed!
 
 The older version of the code is still available at: [PyHighcharts v1.0](https://github.com/fidyeates/PyHighcharts/tree/branch1.0)
@@ -57,6 +63,24 @@ And you can always use the set options method:
 
 ```python
 chart.set_options(yAxis={"title": {"text": "Quantity"}})
+```
+
+## Usage
+
+```python
+template = """
+<body>
+<div id="container"></div>
+<script>
+{}
+</script>
+</body>
+"""
+from pyhighcharts import Chart
+chart = Chart()
+data = [1,2,3,4,5,6,7,8,9,10]
+chart.add_data_series(ChartTypes.line, data, name="Test")
+template.format(chart.script())
 ```
 
 Reference: [Highcharts API](http://api.highcharts.com/highcharts)
