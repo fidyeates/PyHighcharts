@@ -42,7 +42,7 @@ from PyHighcharts import Chart, ChartTypes
 # A chart is the container that your data will be rendered in, it can (obviously) support multiple data series within it.
 chart = Chart()
 
-# Adding a series requires a minimum of two arguments, the series type and 
+# Adding a series requires a minimum of two arguments, the series type and an array of data points
 chart.add_data_series(ChartTypes.Spline, [1, 2, 5, 4, 3], "Example Series")
 
 # This will open up a browser window and display the chart on the page
@@ -89,7 +89,7 @@ template = """
 </script>
 </body>
 """
-from pyhighcharts import Chart
+from pyhighcharts import Chart, ChartTypes
 chart = Chart()
 data = [1,2,3,4,5,6,7,8,9,10]
 chart.add_data_series(ChartTypes.line, data, name="Test")
