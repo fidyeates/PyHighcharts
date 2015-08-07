@@ -17,13 +17,10 @@ from PyHighcharts.highcharts.options import ChartOptions, \
 from PyHighcharts.highcharts.highchart_types import Series, SeriesOptions, HighchartsError, MultiAxis
 from PyHighcharts.highcharts.common import Formatter
 
-
-
 # Stdlib Imports
 import datetime, random, webbrowser, os, inspect, codecs
 from _abcoll import Iterable
 
-global TMP_DIR
 TMP_DIR = "/tmp/highcharts_tmp/"
 DEFAULT_HEADERS = """<script type='text/javascript' src=\
 'https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
@@ -48,14 +45,18 @@ FORMAT_SPECIAL_CASES = {
     "multiaxis": "multiaxis"
 }
 
+
 def set_temp_dir(temp_dir):
     globals()['TMP_DIR'] = temp_dir
 
+
 class HighchartError(Exception):
     """ Highcharts Error Class """
+
     def __init__(self, *args):
         Exception.__init__(self, *args)
         self.args = args
+
 
 def color_formatter(data):
     """ Nothing to see here """
@@ -83,7 +84,7 @@ def update_template(tmp, key, val, tab_depth=1):
             for item in val:
                 if isinstance(item, dict):
                     ntmp = u"{"
-                    for k,v in item.items():
+                    for k, v in item.items():
                         ntmp = update_template(ntmp, k, v, tab_depth=0)
                     ntmp += u"}"
                     new_vals.append(ntmp)
@@ -93,8 +94,9 @@ def update_template(tmp, key, val, tab_depth=1):
                         if isinstance(subitem, datetime.datetime):
                             utc = subitem.utctimetuple()
                             new_items.append(u"Date.UTC({year},{month},{day},{hours},{minutes},{seconds},{millisec})"
-                                        .format(year=utc[0], month=utc[1]-1, day=utc[2], hours=utc[3],
-                                                minutes=utc[4], seconds=utc[5], millisec=subitem.microsecond/1000))
+                                             .format(year=utc[0], month=utc[1] - 1, day=utc[2], hours=utc[3],
+                                                     minutes=utc[4], seconds=utc[5],
+                                                     millisec=subitem.microsecond / 1000))
                         elif isinstance(subitem, bool):
                             # Convert Bool to js equiv.
                             new_items.append(bool_mapping[subitem])
@@ -107,53 +109,54 @@ def update_template(tmp, key, val, tab_depth=1):
                 elif isinstance(item, datetime.datetime):
                     utc = item.utctimetuple()
                     new_vals.append(u"Date.UTC({year},{month},{day},{hours},{minutes},{seconds},{millisec})"
-                           .format(year=utc[0], month=utc[1], day=utc[2], hours=utc[3],
-                                   minutes=utc[4], seconds=utc[5], millisec=item.microsecond/1000))
+                                    .format(year=utc[0], month=utc[1], day=utc[2], hours=utc[3],
+                                            minutes=utc[4], seconds=utc[5], millisec=item.microsecond / 1000))
                 elif isinstance(item, bool):
                     # Convert Bool to js equiv.
                     new_vals.append(bool_mapping[item])
-                elif item == None:
+                elif item is None:
                     new_vals.append(u'null')
                 elif isinstance(item, basestring):
                     # Need to keep string quotes
                     new_vals.append(u"\'" + item + u"\'")
                 else:
                     new_vals.append(unicode(item))
-            return tmp + u"{tabs}{key}:[{vals}],\n".format(tabs=u"\t"*tab_depth, key=key, vals=u",".join(new_vals))
+            return tmp + u"{tabs}{key}:[{vals}],\n".format(tabs=u"\t" * tab_depth, key=key, vals=u",".join(new_vals))
         elif isinstance(val, datetime.datetime):
             utc = val.utctimetuple()
             val = (u"Date.UTC({year},{month},{day},{hours},{minutes},{seconds},{millisec})"
-                    .format(year=utc[0], month=utc[1], day=utc[2], hours=utc[3],
-                            minutes=utc[4], seconds=utc[5], millisec=val.microsecond/1000))
+                   .format(year=utc[0], month=utc[1], day=utc[2], hours=utc[3],
+                           minutes=utc[4], seconds=utc[5], millisec=val.microsecond / 1000))
         elif isinstance(val, bool):
             # Convert Bool to js equiv.
             val = bool_mapping[val]
-        elif val == None:
+        elif val is None:
             val = u'null'
         elif isinstance(val, basestring):
             # Need to keep string quotes
             val = u"\'" + val + u"\'"
-        tmp += u"\t"*tab_depth + u"%s: %s,\n" % (key, val)
+        tmp += u"\t" * tab_depth + u"%s: %s,\n" % (key, val)
     else:
         if FORMAT_SPECIAL_CASES[key] == "skip_quotes":
-            tmp += u"\t"*tab_depth + u"%s: %s,\n" % (key, val)
+            tmp += u"\t" * tab_depth + u"%s: %s,\n" % (key, val)
         elif FORMAT_SPECIAL_CASES[key] == "formatter":
-            tmp += u"\t"*tab_depth + u"%s: %s,\n" % (key, val.formatter)
+            tmp += u"\t" * tab_depth + u"%s: %s,\n" % (key, val.formatter)
         elif FORMAT_SPECIAL_CASES[key] == "multiaxis":
             st = u""
             for k, v in val.__dict__.iteritems():
-                st = update_template(st, k, v, tab_depth=tab_depth+1)
+                st = update_template(st, k, v, tab_depth=tab_depth + 1)
             return st
         else:
             raise NotImplementedError
     return tmp
+
 
 def series_formatter(data):
     """ Special Formatting For Series """
     temp = ""
     for data_set in data['data']:
         temp += u"{\n"
-        for key, val in  data_set.__dict__.items():
+        for key, val in data_set.__dict__.items():
             temp = update_template(temp, key, val, tab_depth=1)
         temp += u"\t},"
     return temp
@@ -167,7 +170,7 @@ def chart_formatter(option_type, data):
         "series": series_formatter,
     }
     tmp = u""
-    #print option_type, data
+    # print option_type, data
     if option_type in special_cases:
         tmp += special_cases[option_type](data)
     elif option_type == "yAxis" and data.get('axis'):
@@ -246,38 +249,37 @@ class Highchart(object):
         for keyword in allowed_kwargs:
             if keyword in kwargs:
                 if keyword == 'events':
-                    self.options['chart'].update_dict(**{'events':{kwargs['events'].event_type:kwargs['events'].event_method}})
+                    self.options['chart'].update_dict(
+                        **{'events': {kwargs['events'].event_type: kwargs['events'].event_method}})
                 else:
-                    self.options['chart'].update_dict(**{keyword:kwargs[keyword]})
+                    self.options['chart'].update_dict(**{keyword: kwargs[keyword]})
         # Some Extra Vals to store:
         self.data_set_count = 0
 
+    def __render__(self, ret=False, template=None):
+        if template == "gecko":
+            template_path = GECKO_TEMPLATE
+        elif template == 'base':
+            template_path = BASE_TEMPLATE
+        else:
+            template_path = BASE_TEMPLATE
 
-    def __render__(self, ret=False, template="base"):
-        if template == "base":
-            TEMPLATE = BASE_TEMPLATE
-        elif template == "gecko":
-            TEMPLATE = GECKO_TEMPLATE
-        with open(TEMPLATE,"rb") as template_file:
+        with open(template_path, "rb") as template_file:
             tmp = unicode(template_file.read())
         rendered = tmp.format(**self.__export_options__())
         if ret:
             return rendered
 
-
     def __export_options__(self):
         bind = self.options.items()
-        data = {k:chart_formatter(k, opClass.__dict__) \
-            for k, opClass in bind}
+        data = {k: chart_formatter(k, opClass.__dict__) for k, opClass in bind}
         return data
-
 
     def __load_defaults__(self):
         self.options["chart"].update_dict(renderTo='container')
         self.options["title"].update_dict(text='A New Highchart')
         self.options["yAxis"].update_dict(title_text='units')
         self.options["credits"].update_dict(enabled=False)
-
 
     def title(self, title=None):
         """ Bind Title """
@@ -286,7 +288,6 @@ class Highchart(object):
         else:
             self.options["title"].update_dict(text=title)
 
-
     def colors(self, colors=None):
         """ Bind Color Array """
         if not colors:
@@ -294,14 +295,12 @@ class Highchart(object):
         else:
             self.options["colors"].set_colors(colors)
 
-
     def chart_background(self, background=None):
         """ Apply Chart Background """
         if not background:
             return self.options["chart"].backgroundColor
         else:
             self.options["chart"].update_dict(backgroundColor=background)
-
 
     def set_start_date(self, date):
         """ Set Plot Start Date """
@@ -325,17 +324,16 @@ class Highchart(object):
             self.hold_point_interval = DEFAULT_POINT_INTERVAL
         hold_iterable = self.options['plotOptions'].__dict__.items()
         for series_type, series_options in hold_iterable:
-            series_options.process_kwargs({'pointStart':formatted_date},
-                series_type=series_type)
-            if not 'pointInterval' in series_options.__dict__:
+            series_options.process_kwargs({'pointStart': formatted_date},
+                                          series_type=series_type)
+            if 'pointInterval' not in series_options.__dict__:
                 series_options.process_kwargs({
-                    'pointInterval':DEFAULT_POINT_INTERVAL},
+                    'pointInterval': DEFAULT_POINT_INTERVAL},
                     series_type=series_type,
                     supress_errors=True)
         self.options['tooltip'].update_dict(formatter=Formatter('date'))
         self.options['xAxis'].update_dict(type='datetime')
         self.start_date_set = True
-
 
     def set_interval(self, interval):
         """ Set Plot Step Interval """
@@ -348,38 +346,36 @@ class Highchart(object):
             self.hold_point_interval = interval
         for hold_item in self.options['plotOptions'].__dict__.items():
             series_type, series_options = hold_item
-            series_options.process_kwargs({'pointInterval':interval},
-                series_type=series_type)
+            series_options.process_kwargs({'pointInterval': interval},
+                                          series_type=series_type)
         if not self.start_date_set:
             print "Set The Start Date With .set_start_date(date)"
-
 
     def add_data_set(self, data, series_type="line", name=None, **kwargs):
         """ Update Plot Options With Defaults If None Exist """
         self.data_set_count += 1
         if not name:
             name = "Series %d" % self.data_set_count
-        kwargs.update({'name':name})
+        kwargs.update({'name': name})
         if self.hold_point_start:
-            kwargs.update({"pointStart":self.hold_point_start})
+            kwargs.update({"pointStart": self.hold_point_start})
             self.hold_point_start = None
         if self.hold_point_interval:
-            kwargs.update({"pointInterval":self.hold_point_interval})
+            kwargs.update({"pointInterval": self.hold_point_interval})
             self.hold_point_interval = None
         if series_type not in self.options["plotOptions"].__dict__:
-            to_update = {series_type:SeriesOptions(series_type=series_type,
-                supress_errors=True, **kwargs)}
+            to_update = {series_type: SeriesOptions(series_type=series_type,
+                                                    supress_errors=True, **kwargs)}
             self.options["plotOptions"].update_dict(**to_update)
-        series_data = Series(data, series_type=series_type, \
-            supress_errors=True, **kwargs)
+        series_data = Series(
+            data, series_type=series_type, supress_errors=True, **kwargs)
         self.options["series"].data.append(series_data)
-
 
     def set_options(self, options, force_options=False):
         """ Set Plot Options """
         if force_options:
             for k, v in options.items():
-                self.options.update({k:v})
+                self.options.update({k: v})
         else:
             new_options = {}
             for key, option_data in options.items():
@@ -387,20 +383,19 @@ class Highchart(object):
                 for key2, val in option_data.items():
                     if isinstance(val, dict):
                         for key3, val2 in val.items():
-                            data.update({key2+"_"+key3:val2})
+                            data.update({key2 + "_" + key3: val2})
                     else:
-                        data.update({key2:val})
-                new_options.update({key:data})
+                        data.update({key2: val})
+                new_options.update({key: data})
             for key, val in new_options.items():
                 self.options[key].update_dict(**val)
-
 
     def show(self):
         """ Show Function """
         handle = webbrowser.get()
         if not os.path.exists(TMP_DIR):
             os.mkdir(TMP_DIR)
-        new_filename = "%x.html" % (random.randint(pow(16, 5), pow(16, 6)-1))
+        new_filename = "%x.html" % (random.randint(pow(16, 5), pow(16, 6) - 1))
         temp_dir = globals()['TMP_DIR']
         if not temp_dir[-1] == "/":
             temp_dir += "/"
@@ -410,13 +405,11 @@ class Highchart(object):
         html = tmp.format(chart_data=self.__render__(ret=True))
         with codecs.open(new_fn, 'w', encoding='utf-8') as file_open:
             file_open.write(html)
-        handle.open("file://"+new_fn)
-
+        handle.open("file://" + new_fn)
 
     def generate(self):
         """ __render__ Wrapper """
         return self.__render__(ret=True)
-
 
     def set_yAxis(self, *axis):
         if all(map(lambda a: isinstance(a, yAxisOptions), axis)):
@@ -424,10 +417,7 @@ class Highchart(object):
         else:
             raise HighchartsError("All Axis Must Be Of Type: yAxisOptions")
 
-
-
     @staticmethod
     def need():
         """ Returns Header """
         return DEFAULT_HEADERS
-
