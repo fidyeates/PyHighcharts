@@ -94,6 +94,9 @@ class Chart(object):
         series = copy.deepcopy(self.series)
         return Chart(*series, **options)
 
+    def set_container(self, container):
+        self.container = container
+
     def add_data_series(self, chart_type, data_points, **options):
         """
         add_data_series will add the provided data series to the chart object.
