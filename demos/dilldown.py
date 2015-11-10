@@ -31,6 +31,7 @@ drilldown_data = [{
 drilldown = {
     "series": [{
         "id": 'animals',
+        "type": "column",
             "data": [
                 ['Cats', 4],
                 ['Dogs', 2],
@@ -40,12 +41,14 @@ drilldown = {
             ]
         }, {
             "id": 'fruits',
+            "type": "column",
             "data": [
                 ['Apples', 4],
                 ['Oranges', 2]
             ]
         }, {
             "id": 'cars',
+            "type": "column",
             "data": [
                 ['Toyota', 4],
                 ['Opel', 2],
@@ -60,6 +63,7 @@ chart.set_yaxis_title("Count")
 chart.add_data_series(
     ChartTypes.column,
     drilldown_data,
+    colorByPoint=True,
     name="Things")
 chart.set_options(drilldown=drilldown)
 chart.show()
