@@ -33,6 +33,7 @@ SHOW_TEMPLATE = """<html>
 <script src="http://code.highcharts.com/modules/heatmap.js"></script>
 <script src="http://code.highcharts.com/modules/treemap.js"></script>
 <script src="http://code.highcharts.com/modules/funnel.js"></script>
+<script src="https://code.highcharts.com/modules/drilldown.js"></script>
 </head>
 <body>
 <div id="$container" style="height: 100%; width: 100%;"></div>
